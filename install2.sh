@@ -1,6 +1,6 @@
 pacman -S networkmanager
-echo "Which Desktop Environments do you want? (separate numbers by spaces)"
-echo "1. GNOME\n2. KDE Plasma\n3. XFCE4\n: "
+echo "Which Desktop Environments do you want? (separate numbers by spaces):"
+echo "1. GNOME\n2. KDE Plasma\n3. XFCE4: "
 read denvs
 for denv in $denvs
 do

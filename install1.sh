@@ -15,7 +15,7 @@ nolist=("no" "No" "n" "N" "NO")
 
 echo -e "ctrl_interface=/run/wpa_supplicant \nupdate_config=1" >> /etc/wpa_supplicant/wpa_supplicant.conf
 
-echo "Do you want to install through wifi (if you haven't connected lan wire already)\n: "
+echo "Do you want to install through wifi (if you haven't connected lan wire already): "
 read wificond
 
 contains nolist $wificond
@@ -25,13 +25,13 @@ else
     "Wifi it is then!"
     rfkill unblock wlan
     ip link
-    echo "Enter the name of interface which you want to connect through (eg. wlan0 )\n: "
+    echo "Enter the name of interface which you want to connect through (eg. wlan0 ): "
     read devname
     ip link set wlan0 up
     echo "Find your Network's SSID (press 'ENTER' to move forward and 'q' when you see your SSID) after 5 seconds "
     sleep 5
     iw dev $devname scan dump | less
-    echo "Enter the SSID of the network to connect to\n: "
+    echo "Enter the SSID of the network to connect to: "
     read assid
     iw dev $devname connect -w $assid
     systemctl start dhcpcd
@@ -41,7 +41,7 @@ fi
 #echo "options iwlwifi 11n_disable=1" >> /etc/modprobe.d/iwlwifi.conf
 
 systemctl start dhcpcd
-echo "Enter your new super user's name\n: "
+echo "Enter your new super user's name: "
 read user_name
 useradd -m $user_name
 echo "Enter the passwoed for $user_name"
@@ -52,12 +52,12 @@ EDITOR=nano visudo
 pacman -S alsa-firmware alsa-utils pulseaudio pavucontrol pulseaudio-bluetooth fftw linux-headers
 pacman -S xf86-video-modesetting  xf86-video-intel
 
-echo "Do you have - \n1. No Separate GPU\n2. NVIDIA (2011 and later) only\n3. NVIDIA (2011 and later) Optimus Dual Graphics\n4. AMD (GCN or RDNA)\n5. AMD (TeraScale and older)\n: "
+echo -e "Do you have - \n1. No Separate GPU\n2. NVIDIA (2011 and later) only\n3. NVIDIA (2011 and later) Optimus Dual Graphics\n4. AMD (GCN or RDNA)\n5. AMD (TeraScale and older): "
 read gfx
 
 case $gfx in
     2) 
-    echo "Do you want to install proprietary driver? (recommended yes)\n: "
+    echo "Do you want to install proprietary driver? (recommended yes): "
     read proprietary_cndn
     contains $nolist $proprietary_cndn
     if [ $? = 1 ]; then
@@ -82,4 +82,4 @@ case $gfx in
     ;;
 esac
 pacman -S xorg xorg-twm xorg-xclock xterm ttf-dejavu firefox mesa mesa-demos
-echo "reboot, type startx, try prime-run, and meet me on the other side\n"
+echo "reboot, type startx, try prime-run, and meet me on the other side"
